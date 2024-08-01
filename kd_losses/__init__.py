@@ -7,12 +7,12 @@ from .pkt import PKTCosSim
 from .fsp import FSP
 from .ft import FT
 from .dml import DML
-from .kdsvd import KDSVD
+# from .kdsvd import KDSVD
 from .rkd import RKD
 from .ab import AB
 from .sp import SP
 from .sobolev import Sobolev
-from .bss import BSS, BSSAttacker
+# from .bss import BSS, BSSAttacker
 from .cc import CC
 from .lwm import LwM
 from .irg import IRG

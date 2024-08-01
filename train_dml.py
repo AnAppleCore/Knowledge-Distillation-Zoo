@@ -76,14 +76,14 @@ def main():
 
 	logging.info('----------- Network Initialization --------------')
 	net1 = define_tsnet(name=args.net1_name, num_class=args.num_class, cuda=args.cuda)
-	checkpoint = torch.load(args.net1_init)
-	load_pretrained_model(net1, checkpoint['net'])
+	# checkpoint = torch.load(args.net1_init)
+	# load_pretrained_model(net1, checkpoint['net'])
 	logging.info('Net1: %s', net1)
 	logging.info('Net1 param size = %fMB', count_parameters_in_MB(net1))
 
 	net2 = define_tsnet(name=args.net2_name, num_class=args.num_class, cuda=args.cuda)
-	checkpoint = torch.load(args.net2_init)
-	load_pretrained_model(net2, checkpoint['net'])
+	# checkpoint = torch.load(args.net2_init)
+	# load_pretrained_model(net2, checkpoint['net'])
 	logging.info('Net2: %s', net1)
 	logging.info('Net2 param size = %fMB', count_parameters_in_MB(net2))
 	logging.info('-----------------------------------------------')
@@ -223,6 +223,7 @@ def train(train_loader, nets, optimizers, criterions, epoch):
 		# for net1
 		cls1_loss = criterionCls(out1, target)
 		kd1_loss  = criterionKD(out1, out2.detach()) * args.lambda_kd
+		kd1_loss *= 0.
 		net1_loss = cls1_loss + kd1_loss
 
 		prec11, prec15 = accuracy(out1, target, topk=(1,5))
@@ -304,6 +305,7 @@ def test(test_loader, nets, criterions):
 		# for net1
 		cls1_loss = criterionCls(out1, target)
 		kd1_loss  = criterionKD(out1, out2.detach()) * args.lambda_kd
+		kd1_loss *= 0.
 
 		prec11, prec15 = accuracy(out1, target, topk=(1,5))
 		cls1_losses.update(cls1_loss.item(), img.size(0))
